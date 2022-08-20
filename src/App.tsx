@@ -2,10 +2,14 @@ import { useEffect, useState } from 'react'
 import './App.css'
 import { IPopulationService, PopulationDatum } from './services/IPopulationService';
 import { scaleBand, scaleLinear } from 'd3'
+import { AxisLeft } from './AxisLeft';
+import { AxisBottom } from './AxisBottom';
+import { Marks } from './Marks';
 
 type AppProps = {
   populationService: IPopulationService
 }
+
 
 function App(props: AppProps) {
 
@@ -37,19 +41,9 @@ function App(props: AppProps) {
     <div className="App" >
       <svg style={{ border: '1px red solid' }} width={width} height={height}>
         <g transform={`translate(${margin.left},${margin.top})`}>
-          {xScale.ticks().map(v => (
-            <g key={v} transform={`translate(${xScale(v)}, 0)`}>
-              <line y2={innerHeight} stroke="#fff" />
-              <text style={{ textAnchor: 'middle' }} fill='#fff' y={innerHeight + 3} dy=".71em">{v}</text>
-            </g>))}
-          {yScale.domain().map(v => (
-            <text key={v} style={{ textAnchor: 'end' }} fill='#fff' y={(yScale(v) ?? 0) + yScale.bandwidth() / 2} dy=".31em" x={-3}>{v}</text>
-          ))}
-          {popData.map(d => <rect key={d.country}
-            x={0} y={yScale(d.country)}
-            width={xScale(d.pop)}
-            height={yScale.bandwidth()} fill="#aaa"></rect>)
-          }
+          <AxisBottom xScale={xScale} innerHeight={innerHeight} />
+          <AxisLeft yScale={yScale} />
+          <Marks xScale={xScale} yScale={yScale} data={popData.map((x) => ({ category: x.country, value: x.pop }))} />
         </g>
       </svg>
     </div>
