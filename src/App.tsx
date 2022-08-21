@@ -1,10 +1,13 @@
 import './App.css'
-import { IPopulationService, PopulationDatum } from './services/IPopulationService';
+import { IPopulationService } from './services/IPopulationService';
 import { BrowserRouter, Link, Outlet, Route, Routes } from 'react-router-dom';
 import { PopulationChart } from './pages/PopulationChart';
+import { Iris } from './pages/Iris';
+import { IIrisService } from './services/IIrisService';
 
 type AppProps = {
-  populationService: IPopulationService
+  populationService: IPopulationService;
+  irisService: IIrisService
 }
 
 
@@ -17,7 +20,7 @@ const Layout = () => {
             <Link to="/">Population</Link>
           </li>
           <li>
-            <Link to="/sepal">Sepal</Link>
+            <Link to="/iris">Iris</Link>
           </li>
         </ul>
       </nav>
@@ -27,23 +30,17 @@ const Layout = () => {
   )
 };
 
-function Sepal() {
-  return (<div>sepal</div>)
-}
-
 function App(props: AppProps) {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<PopulationChart populationService={props.populationService} />} />
-          <Route path="sepal" element={<Sepal />} />
+          <Route path="iris" element={<Iris irisService={props.irisService} />} />
         </Route>
       </Routes>
     </BrowserRouter>
   );
-
-
 }
 
 export default App

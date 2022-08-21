@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App'
 import './index.css'
+import { JsonIrisService } from './services/JsonIrisService'
 import { JsonPopulationService } from './services/JsonPopulationService'
 
 // Load text with Ajax synchronously: takes path to file and optional MIME type
@@ -37,8 +38,13 @@ let jsonData: any;
 jsonData = loadJSON('../../country_population_by_year.json');
 const populationService = new JsonPopulationService(jsonData);
 
+jsonData = loadJSON('../../iris.json')
+const irisService = new JsonIrisService(jsonData)
+
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <App populationService={populationService} />
+    <App
+      populationService={populationService}
+      irisService={irisService} />
   </React.StrictMode>
 )

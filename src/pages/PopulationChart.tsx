@@ -1,8 +1,8 @@
 import { format, scaleBand, scaleLinear } from "d3";
 import { useEffect, useState } from "react";
-import { AxisBottom } from "../AxisBottom";
-import { AxisLeft } from "../AxisLeft";
-import { Marks } from "../Marks";
+import { AxisBottom } from "../components/AxisBottom";
+import { AxisLeft } from "../components/AxisLeft";
+import { Marks } from "../components/Marks";
 import { IPopulationService, PopulationDatum } from "../services/IPopulationService";
 
 type PopulationChartProps = {
