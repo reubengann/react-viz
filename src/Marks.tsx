@@ -9,15 +9,19 @@ type MarksProps = {
     xScale: ScaleLinear<number, number, never>;
     yScale: ScaleBand<string>;
     data: CategoricalDatum[];
+    tooltipFormat: (n: number) => string;
 };
 
-export function Marks({ xScale, yScale, data }: MarksProps) {
+export function Marks({ xScale, yScale, data, tooltipFormat }: MarksProps) {
     return (
         <>
             {data.map(d => <rect className='marks-1' key={d.category}
                 x={0} y={yScale(d.category)}
                 width={xScale(d.value)}
-                height={yScale.bandwidth()} ></rect>)}
+                height={yScale.bandwidth()} >
+                <title>{tooltipFormat(d.value)}</title>
+
+            </rect>)}
         </>
     );
 }
