@@ -2,7 +2,7 @@ import { format, scaleBand, scaleLinear } from "d3";
 import { useEffect, useState } from "react";
 import { AxisBottom } from "../components/AxisBottom";
 import { AxisLeft } from "../components/AxisLeft";
-import { Marks } from "../components/Marks";
+import { BarMarks } from "../components/BarMarks";
 import { IPopulationService, PopulationDatum } from "../services/IPopulationService";
 
 type PopulationChartProps = {
@@ -48,7 +48,7 @@ export function PopulationChart(props: PopulationChartProps) {
                 <g transform={`translate(${margin.left},${margin.top})`}>
                     <AxisBottom xScale={xScale} innerHeight={innerHeight} tickFormat={xTickFormatter} />
                     <AxisLeft yScale={yScale} />
-                    <Marks xScale={xScale} yScale={yScale}
+                    <BarMarks xScale={xScale} yScale={yScale}
                         data={popData.map((x) => ({ category: x.country, value: x.pop }))}
                         tooltipFormat={xTickFormatter} />
                     <text className='axis-label' x={innerWidth / 2} y={innerHeight + 45} textAnchor='middle'>Population</text>

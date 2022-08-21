@@ -5,14 +5,14 @@ export type CategoricalDatum = {
     value: number
 }
 
-type MarksProps = {
+type BarMarksProps = {
     xScale: ScaleLinear<number, number, never>;
     yScale: ScaleBand<string>;
     data: CategoricalDatum[];
     tooltipFormat: (n: number) => string;
 };
 
-export function Marks({ xScale, yScale, data, tooltipFormat }: MarksProps) {
+export function BarMarks({ xScale, yScale, data, tooltipFormat }: BarMarksProps) {
     return (
         <>
             {data.map(d => <rect className='marks-1' key={d.category}
