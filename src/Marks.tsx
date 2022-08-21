@@ -14,10 +14,10 @@ type MarksProps = {
 export function Marks({ xScale, yScale, data }: MarksProps) {
     return (
         <>
-            {data.map(d => <rect key={d.category}
+            {data.map(d => <rect className='marks-1' key={d.category}
                 x={0} y={yScale(d.category)}
                 width={xScale(d.value)}
-                height={yScale.bandwidth()} fill="#8dd3c7"></rect>)}
+                height={yScale.bandwidth()} ></rect>)}
         </>
     );
 }
