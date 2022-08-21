@@ -32,7 +32,8 @@ export function Iris({ irisService }: IrisProps) {
 
     const xScale = scaleLinear()
         .domain(extent(irisData, xValue) as [number, number])
-        .range([0, innerWidth]);
+        .range([0, innerWidth])
+        .nice();
 
     const yScale = scaleLinear()
         .domain(extent(irisData, yValue) as [number, number])

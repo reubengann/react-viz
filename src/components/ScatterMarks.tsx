@@ -20,7 +20,7 @@ export function ScatterMarks({ xScale, yScale, data, tooltipFormat }: ScatterMar
                 key={i}
                 cx={xScale(d.x)}
                 cy={yScale(d.y)}
-                r={10} />))}
+                r={7} />))}
         </>
     );
 }
