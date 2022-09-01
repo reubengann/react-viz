@@ -34,9 +34,11 @@ function loadJSON(filePath: string) {
 }
 
 let jsonData: any;
+let jsonData2: any;
 
-jsonData = loadJSON('../../country_population_by_year.json');
-const populationService = new JsonPopulationService(jsonData);
+jsonData = loadJSON('../../country_population_by_year.json')
+jsonData2 = loadJSON('../../country_population_by_nation.json');
+const populationService = new JsonPopulationService(jsonData, jsonData2);
 
 jsonData = loadJSON('../../iris.json')
 const irisService = new JsonIrisService(jsonData)

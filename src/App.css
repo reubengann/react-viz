@@ -25,3 +25,9 @@
   fill: #eee;
   font-size: 2em;
 }
+
+.line-mark {
+  stroke: #8dd3c7;
+  fill: none;
+  stroke-width: 5;
+}

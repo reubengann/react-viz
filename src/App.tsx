@@ -1,7 +1,7 @@
 import './App.css'
 import { IPopulationService } from './services/IPopulationService';
 import { BrowserRouter, Link, Outlet, Route, Routes } from 'react-router-dom';
-import { PopulationChart } from './pages/PopulationChart';
+import { PopulationPage } from './pages/PopulationChart';
 import { Iris } from './pages/Iris';
 import { IIrisService } from './services/IIrisService';
 
@@ -35,7 +35,7 @@ function App(props: AppProps) {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<PopulationChart populationService={props.populationService} />} />
+          <Route index element={<PopulationPage populationService={props.populationService} />} />
           <Route path="iris" element={<Iris irisService={props.irisService} />} />
         </Route>
       </Routes>

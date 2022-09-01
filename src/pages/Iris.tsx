@@ -49,7 +49,7 @@ export function Iris({ irisService }: IrisProps) {
                     <LinearAxisLeft yScale={yScale} innerWidth={innerWidth} />
                     <ScatterMarks xScale={xScale} yScale={yScale}
                         data={irisData.map((d) => ({ category: d.species, x: xValue(d), y: yValue(d) }))}
-                        tooltipFormat={xTickFormatter} />
+                    />
                     <text className='axis-label'
                         x={innerWidth / 2}
                         y={innerHeight + 45}
