@@ -9,7 +9,7 @@ export class JsonPopulationService implements IPopulationService {
         this.data_by_country = {}
         for (let [key, value] of Object.entries(jsonData2)) {
             this.data_by_country[key] = (value as Array<any>).map((x: any) => ({
-                year: new Date(x.year, 0, 0), pop: x.pop
+                year: new Date(x.year, 0, 0), pop: x.pop * 1000
             }))
         }
     }

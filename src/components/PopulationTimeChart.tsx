@@ -1,4 +1,4 @@
-import { extent, scaleLinear, scaleTime } from "d3";
+import { extent, format, scaleLinear, scaleTime } from "d3";
 import { PopulationTimeDatum } from "../services/IPopulationService";
 import { AxisBottomTime } from "./AxisBottomTime";
 import { LinearAxisLeft } from "./LinearAxisLeft";
@@ -12,13 +12,13 @@ type PopulationTimeChartProps = {
 const xValue = (d: PopulationTimeDatum) => d.year;
 const yValue = (d: PopulationTimeDatum) => d.pop;
 const xAxisLabel = 'Time'
-const yAxisLabel = 'Population'
+const yAxisLabel = 'Population of China'
 
 export function PopulationTimeChart({ popdata }: PopulationTimeChartProps) {
 
     const height = 500;
     const width = 800;
-    const margin = { top: 20, left: 100, bottom: 60, right: 30 };
+    const margin = { top: 20, left: 110, bottom: 60, right: 30 };
 
     const innerHeight = height - margin.top - margin.bottom;
     const innerWidth = width - margin.left - margin.right;
@@ -31,15 +31,19 @@ export function PopulationTimeChart({ popdata }: PopulationTimeChartProps) {
     const yScale = scaleLinear()
         .domain(extent(popdata, yValue) as [number, number])
         .range([innerHeight, 0])
+        .nice()
 
     const xTickFormatter = (d: Date) => `${d.getFullYear()}`
-
+    const siFormat = format(".2s");
+    function yTickFormatter(n: number) {
+        return siFormat(n).replace('G', 'B');
+    }
     return (
         <div className="App" >
             <svg style={{ border: '1px red solid' }} width={width} height={height}>
                 <g transform={`translate(${margin.left},${margin.top})`}>
                     <AxisBottomTime xScale={xScale} innerHeight={innerHeight} tickFormat={xTickFormatter} />
-                    <LinearAxisLeft yScale={yScale} innerWidth={innerWidth} />
+                    <LinearAxisLeft yScale={yScale} innerWidth={innerWidth} yTickFormatter={yTickFormatter} />
                     <LineMarks xScale={xScale} yScale={yScale}
                         data={popdata.map((d) => ({ x: xValue(d), y: yValue(d) }))}
                     />
@@ -48,7 +52,7 @@ export function PopulationTimeChart({ popdata }: PopulationTimeChartProps) {
                         y={innerHeight + 45}
                         textAnchor='middle'>{xAxisLabel}</text>
                     <text className='axis-label'
-                        transform={`translate(${-50},${innerHeight / 2}) rotate(-90)`}
+                        transform={`translate(${-60},${innerHeight / 2}) rotate(-90)`}
                         textAnchor='middle'>{yAxisLabel}</text>
                 </g>
             </svg>
