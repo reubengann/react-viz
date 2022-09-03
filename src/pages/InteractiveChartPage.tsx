@@ -1,8 +1,8 @@
-import { extent, scaleLinear } from "d3";
+import { extent, scaleLinear, ScaleOrdinal, scaleOrdinal } from "d3";
 import { useEffect, useState } from "react";
 import { AxisBottom } from "../components/AxisBottom";
 import { LinearAxisLeft } from "../components/LinearAxisLeft";
-import { ScatterMarks } from "../components/ScatterMarks";
+import { ScatterMarksColor } from "../components/ScatterMarksColor";
 import { IIrisService, IrisDatum } from "../services/IIrisService";
 
 type DropdownItem = {
@@ -22,7 +22,7 @@ function Dropdown(props: {
         } value={props.selectedOption}>
             {
                 props.data.map(x =>
-                    <option value={x.key}>{x.label}</option>
+                    <option key={x.key} value={x.key}>{x.label}</option>
                 )
             }
         </select>
@@ -58,6 +58,7 @@ export default function InteractiveChartPage({ irisService }: IrisProps) {
 
     const xValue = (d: IrisDatum) => getIrisAttr(selectedXAttr, d);
     const yValue = (d: IrisDatum) => getIrisAttr(selectedYAttr, d);
+    const colorValue = (d: IrisDatum) => d.species;
     const xAxisLabel = xOptions.find(x => x.key === selectedXAttr)?.label
     const yAxisLabel = xOptions.find(x => x.key === selectedYAttr)?.label
 
@@ -70,6 +71,10 @@ export default function InteractiveChartPage({ irisService }: IrisProps) {
         .domain(extent(irisData, yValue) as [number, number])
         .range([0, innerHeight])
         .nice()
+
+    const colorScale: ScaleOrdinal<string, string, never> = scaleOrdinal()
+        .domain(irisData.map(colorValue))
+        .range(['#8dd3c7', '#feffb3', '#bfbbd9']) as ScaleOrdinal<string, string, never>
 
     const xTickFormatter = (d: number) => `${d}`
 
@@ -85,7 +90,7 @@ export default function InteractiveChartPage({ irisService }: IrisProps) {
                     <g transform={`translate(${margin.left},${margin.top})`}>
                         <AxisBottom xScale={xScale} innerHeight={innerHeight} tickFormat={xTickFormatter} />
                         <LinearAxisLeft yScale={yScale} innerWidth={innerWidth} />
-                        <ScatterMarks xScale={xScale} yScale={yScale}
+                        <ScatterMarksColor xScale={xScale} yScale={yScale} colorScale={colorScale}
                             data={irisData.map((d) => ({ category: d.species, x: xValue(d), y: yValue(d) }))}
                         />
                         <text className='axis-label'
