@@ -4,6 +4,7 @@ import { BrowserRouter, Link, Outlet, Route, Routes } from 'react-router-dom';
 import { PopulationPage } from './pages/PopulationChart';
 import { Iris } from './pages/Iris';
 import { IIrisService } from './services/IIrisService';
+import InteractiveChartPage from './pages/InteractiveChartPage';
 
 type AppProps = {
   populationService: IPopulationService;
@@ -17,7 +18,10 @@ const Layout = () => {
       <nav>
         <ul>
           <li>
-            <Link to="/">Population</Link>
+            <Link to="/">Interactive</Link>
+          </li>
+          <li>
+            <Link to="/population">Population</Link>
           </li>
           <li>
             <Link to="/iris">Iris</Link>
@@ -35,7 +39,8 @@ function App(props: AppProps) {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<PopulationPage populationService={props.populationService} />} />
+          <Route index element={<InteractiveChartPage irisService={props.irisService} />} />
+          <Route path="population" element={<PopulationPage populationService={props.populationService} />} />
           <Route path="iris" element={<Iris irisService={props.irisService} />} />
         </Route>
       </Routes>
